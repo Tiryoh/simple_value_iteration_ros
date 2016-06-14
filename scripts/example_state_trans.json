@@ -1,0 +1,152 @@
+{
+	"metadata": {
+		"statenum": "9",
+		"actions": ["left", "right", "up", "down"]
+	},
+	"state_transitions": [{
+		"state": [{
+			"6": [{
+				"action": [{
+					"right": {
+						"state": "7",
+						"prob.": "1",
+						"cost": "1000"
+					},
+					"up": {
+						"state": "3",
+						"prob.": "1",
+						"cost": "1000"
+					}
+				}]
+			}],
+			"7": [{
+				"action": [{
+					"right": {
+						"state": "8",
+						"prob.": "1",
+						"cost": "1000"
+					},
+					"up": {
+						"state": "4",
+						"prob.": "1",
+						"cost": "1000"
+					},
+					"left": {
+						"state": "6",
+						"prob.": "1",
+						"cost": "1000"
+					}
+				}]
+			}],
+			"8": [{
+				"action": [{
+					"up": {
+						"state": "5",
+						"prob.": "1",
+						"cost": "1000"
+					},
+					"left": {
+						"state": "7",
+						"prob.": "1",
+						"cost": "1000"
+					}
+				}]
+			}],
+			"3": [{
+				"action": [{
+					"right": {
+						"state": "4",
+						"prob.": "1",
+						"cost": "1000"
+					},
+					"up": {
+						"state": "0",
+						"prob.": "1",
+						"cost": "1000"
+					},
+					"down": {
+						"state": "6",
+						"prob.": "1",
+						"cost": "1000"
+					}
+				}]
+			}],
+			"4": [{
+				"action": [{
+					"right": {
+						"state": "5",
+						"prob.": "1",
+						"cost": "1000"
+					},
+					"up": {
+						"state": "1",
+						"prob.": "1",
+						"cost": "1000"
+					},
+					"down": {
+						"state": "7",
+						"prob.": "1",
+						"cost": "1000"
+					},
+					"left": {
+						"state": "3",
+						"prob.": "1",
+						"cost": "1000"
+					}
+				}]
+			}],
+			"5": [{
+				"action": [{
+					"left": {
+						"state": "4",
+						"prob.": "1",
+						"cost": "1000"
+					},
+					"up": {
+						"state": "2",
+						"prob.": "1",
+						"cost": "1000"
+					},
+					"down": {
+						"state": "8",
+						"prob.": "1",
+						"cost": "1000"
+					}
+				}]
+			}],
+			"0": [{
+				"action": [{
+					"down": {
+						"state": "3",
+						"prob.": "1",
+						"cost": "1000"
+					},
+					"right": {
+						"state": "1",
+						"prob.": "1",
+						"cost": "1000"
+					}
+				}]
+			}],
+			"1": [{
+				"action": [{
+					"left": {
+						"state": "0",
+						"prob.": "1",
+						"cost": "1000"
+					},
+					"down": {
+						"state": "4",
+						"prob.": "1",
+						"cost": "1000"
+					},
+					"right": {
+						"state": "2",
+						"prob.": "1",
+						"cost": "1000"
+					}
+				}]
+			}]
+		}]
+	}]
+}
