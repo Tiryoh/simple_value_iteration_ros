@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include "State.h"
+#include "picojson/picojson.h"
 using namespace std;
 
 StateTrans::StateTrans()
@@ -166,6 +167,67 @@ bool StateTrans::readStateTransFile(const char *filename)
 
 	ifs_state_trans.close();
 
+	return true;
+}
+
+bool StateTrans::readStateTransJsonFile(const char *filename){
+	ifstream ifs_state_trans(filename);
+	picojson::value v;
+
+	ifs_state_trans >> v;
+	string err = picojson::get_last_error();
+	if(!err.empty()){
+		cerr << err << endl;
+		return false;
+	}
+
+	picojson::object& obj = v.get<picojson::object>();
+	//metadata
+	picojson::object& metadata_obj = obj["metadata"].get<picojson::object>();
+	setStateNum( metadata_obj["statenum"].get<string>().c_str() );
+	picojson::array& actions = metadata_obj["actions"].get<picojson::array>();
+	for (picojson::array::iterator it = actions.begin(); it != actions.end(); it++) {
+		setAction( (*it).get<string>() );
+	}
+	//state
+	static int state_index = -1;
+	static int action_index = -1;
+	picojson::array& state_array = obj["state_transitions"].get<picojson::array>();
+	for (picojson::array::iterator it2 = state_array.begin(); it2 != state_array.end(); it2++) {
+		picojson::object& o = it2->get<picojson::object>();
+		picojson::object& e = o["prediction"].get<picojson::object>();
+		state_index = atoi( o["state"].get<string>().c_str() );
+		action_index = getActionIndex( o["action"].get<string>() );
+		if(state_index < 0){
+			cerr << "Invalid State No." << endl;
+			return false;
+		}
+		int s_after = atoi( e["state"].get<string>().c_str() );
+		double p = atof( e["prob."].get<string>().c_str() );
+		double c = atof( e["cost"].get<string>().c_str() );
+		if(s_after < 0){
+			cerr << "Invalid Posterior State" << endl;
+			return false;
+		}
+		if(p <= 0.0 || p > 1.0){
+			cerr << "Invalid Probability" << endl;
+			return false;
+		}
+		setStateTrans(state_index,action_index,s_after,p,c);
+	}
+	//final
+	picojson::object& final_states = obj["final states"].get<picojson::object>();
+	static int final_state_index = -1;
+	static int value = 0;
+	final_state_index = atoi( final_states["state"].get<string>().c_str() );
+	value = atoi( final_states["value"].get<string>().c_str() );
+	setValue(final_state_index,value);
+	if(final_state_index < 0){
+		cerr << "Invalid State No." << endl;
+		return false;
+	}
+
+	ifs_state_trans.close();
 	return true;
 }
 

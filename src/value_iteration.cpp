@@ -53,8 +53,14 @@ bool do_sweeps(simple_value_iteration_ros::DoSweeps::Request &req,
 	if(req.initialize){
 		st.init();
 		string filename = req.work_dir + '/' + req.state_transition_file;
-		if(! st.readStateTransFile(filename.c_str()))
-			die("state_trans file error");
+		string::size_type ext = filename.rfind(".json");
+		if(ext != string::npos ){
+			if(! st.readStateTransJsonFile(filename.c_str()))
+				die("state_trans file error");
+		}else{
+			if(! st.readStateTransFile(filename.c_str()))
+				die("state_trans file error");
+		}
 	}
 
 	//execution with n threads

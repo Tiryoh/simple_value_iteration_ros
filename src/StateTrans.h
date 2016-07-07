@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <vector>
 #include "State.h"
+#include "picojson/picojson.h"
 using namespace std;
 
 class StateTrans{
@@ -38,6 +39,7 @@ public:
 	unsigned long getStateNum(void);
 	//functions for execution
 	bool readStateTransFile(const char *filename);
+	bool readStateTransJsonFile(const char *filename);
 	bool valueIteration(unsigned long start_pos);
 
 	//output
