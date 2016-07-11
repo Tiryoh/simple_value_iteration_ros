@@ -20,7 +20,7 @@ def do_value_iteration(t_num,init):
         d = roslib.packages.get_pkg_dir('simple_value_iteration_ros')
         # change this file to example_state_trans_prob if you want to try the probabilistic version
         res = s(work_dir='',
-            state_transition_file=d+'/scripts/example_state_trans',
+            state_transition_file=d+'/scripts/example_state_trans_prob',
             thread_num=t_num,initialize=init)
 
     except rospy.ServiceException, e:
